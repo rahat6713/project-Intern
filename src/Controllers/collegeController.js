@@ -28,7 +28,7 @@ const createCollege = async function (req, res) {
             res.status(400).send({ status: false, msg: "fullName is required" })
             return
         }
-        if(name = fullName) {
+        if(name == fullName) {
             res.status(400).send({status: false, msg: "name amd fullName can't be same enter fullName properly"})
             return
         }
