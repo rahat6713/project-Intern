@@ -53,10 +53,14 @@ const createCollege = async function (req, res) {
             res.status(400).send({ status: false, msg: "logoLink is already used" })
             return
         }
-        else {
-            let createCollege = await collegeModel.create(data)
+        if(isDeleted=true) {
+             let collegeToBeCreated = {name, fullName, logoLink ,isDeleted:false}
+            let createCollege = await collegeModel.create(collegeToBeCreated)
             res.status(201).send({ status: true, msg: "data created successfully", data: createCollege })
-        }
+         } else {
+            let createCollege = await collegeModel.create(data)
+            res.status(201).send({ status: true, msg: "data created successfully", data: createCollege }) 
+         }
     }
     catch (error) {
         console.log(error)
