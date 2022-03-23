@@ -70,15 +70,18 @@ const createIntern = async function (req, res) {
         if (!collegeDetails) {
             res.status(404).send({ status: false, msg: "collegeId not exist" })
             return
+        } 
+        if (isDeleted = true) {
+            let internToBeCreated = { name, email, mobile, collegeId, isDeleted: false }
+            let internCreated = await internModel.create(internToBeCreated)
+            res.status(201).send({ status: true, msg: "intern created successfully", data: internCreated })
         } else {
             let internCreated = await internModel.create(data)
-            res.status(201).send({ status: true, msg: "intern created successfully", data: internCreated })
+            res.status(201).send({ status: true, data: internCreated })
         }
     }
 
-
-
-    catch (error) {
+ catch (error) {
         console.log(error)
         res.status(500).send({ msg: error.message })
     }
