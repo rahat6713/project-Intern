@@ -28,6 +28,10 @@ const createCollege = async function (req, res) {
             res.status(400).send({ status: false, msg: "fullName is required" })
             return
         }
+        if(req.body.name = req.body.fullName) {
+            res.status(400).send({status: false, msg: "name amd fullName can't be same enter fullName properly"})
+            return
+        }
         if (!isValid(logoLink)) {
             res.status(400).send({ status: false, msg: "logoLink is required" })
             return
