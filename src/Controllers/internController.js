@@ -45,12 +45,8 @@ const createIntern = async function (req, res) {
             res.status(400).send({ status: false, msg: "mobile is not a valid mobile" })
             return
         }
-        if (!isValid(collegeId)) {
-            res.status(400).send({ status: false, msg: "collegeId is required" })
-            return
-        }
-        if (!isValidObjectId(collegeId)) {
-            res.status(400).send({ status: false, msg: "collegeId is not a valid objectId" })
+        if (!isValid(Name)) {
+            res.status(400).send({ status: false, msg: "collegeName is required" })
             return
         }
 
@@ -66,17 +62,19 @@ const createIntern = async function (req, res) {
             return
         }
 
-        let collegeDetails = await collegeModel.findById(collegeId)
+        let collegeDetails = await collegeModel.findOne({name: collegeNmae})
         if (!collegeDetails) {
-            res.status(404).send({ status: false, msg: "collegeId not exist" })
+            res.status(404).send({ status: false, msg: "details with this collegeNamenot exist" })
             return
         } 
         if (isDeleted = true) {
-            let internToBeCreated = { name, email, mobile, collegeId, isDeleted: false }
+            let internToBeCreated = { name, email, mobile, collegeId: collegeDetails._id, isDeleted: false }
             let internCreated = await internModel.create(internToBeCreated)
             res.status(201).send({ status: true, msg: "intern created successfully", data: internCreated })
-        } else {
-            let internCreated = await internModel.create(data)
+        } 
+        else {
+            let internToBeCreated = { name, email, mobile, collegeId: collegeDetails._id }
+            let internCreated = await internModel.create(internToBeCreated)
             res.status(201).send({ status: true, data: internCreated })
         }
     }
