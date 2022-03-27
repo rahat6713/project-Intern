@@ -19,7 +19,7 @@ const createIntern = async function (req, res) {
     try {
         let data = req.body
 
-        let { name, email, mobile, collegeId } = data
+        let { name, email, mobile, collegeName } = data
 
         if (Object.keys(data).length == 0) {
             res.status(400).send({ status: false, msg: "BAD REQUEST" })
